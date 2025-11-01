@@ -5,9 +5,10 @@
 
 class Cube {
 public:
-    GLuint VAO, VBO; // vertex array object, vertex buffer object
+    GLuint VAO, positionBuffer, colorBuffer; // vertex array object, vertex buffer object
 
     GLfloat vertices[108];
+    GLfloat colors[144];
 
     Cube();
 

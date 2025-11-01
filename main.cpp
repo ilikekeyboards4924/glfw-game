@@ -14,6 +14,16 @@
 long long lastTime = 0;
 long long currentTime = 0;
 
+void checkGLErrors() { // delete later
+    GLenum err;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        // Log the error (e.g., print to console)
+        std::cerr << "OpenGL Error: " << err << std::endl;
+        // You might want to break here to find the exact line
+    }
+}
+
+
 int main() {
     glfwInit(); // initialize glfw
     // tell glfw which version of opengl is being used
@@ -42,13 +52,10 @@ int main() {
         return -1;
     }
 
+    glViewport(0, 0, windowWidth, windowHeight); // specify the viewport of OpenGL in the window
+    initShaders(); // make sure to run this BEFORE any classes that have constructors that contain shader/drawing stuff
 
     cube = new Cube();
-
-
-    glViewport(0, 0, windowWidth, windowHeight); // specify the viewport of OpenGL in the window
-    initShaders();
-
 
     camera = Camera();
 
@@ -60,7 +67,7 @@ int main() {
     );
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0), (double)(windowWidth) / (double)(windowHeight), 0.1, 1000.0);
 
-
+    glEnable(GL_DEPTH_TEST);
     //double fpsMilliseconds = 1000 / 60; // dont specify an fps, just use deltaTime
     while (!glfwWindowShouldClose(window)) {
         // deltaTime stuff
@@ -73,7 +80,8 @@ int main() {
 
         // drawing and updating
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT); // clear the back buffer and assign the new color to it
+        //glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the back buffer and assign the new color to it
 
         glUseProgram(shaderProgram);
 
@@ -88,6 +96,7 @@ int main() {
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
         cube->draw();
+        checkGLErrors();
 
         glfwSwapBuffers(window); // swap the back and front buffers
         glfwPollEvents(); // take care of all the glfw events

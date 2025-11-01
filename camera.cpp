@@ -9,7 +9,7 @@
 Camera::Camera() {
 	position = glm::vec3(0, 0, 3);
 	pitch = 0;
-	yaw = 0;
+	yaw = 270;
 
 	front = glm::vec3(0, 0, 0);
 	frontXZ = glm::vec3(0, 0, 0);

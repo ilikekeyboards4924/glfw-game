@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "global.h"
 #include "cube.h"
 
 Cube::Cube() {
@@ -53,21 +54,77 @@ Cube::Cube() {
         -0.5, -0.5, -0.5,
     };
 
+    GLfloat tempColors[144] = {
+        0.1, 0.5, 0.5, 1.0,
+        0.2, 0.5, 0.5, 1.0,
+        0.3, 0.5, 0.5, 1.0,
+        0.4, 0.5, 0.5, 1.0,
+        0.5, 0.5, 0.5, 1.0,
+        0.6, 0.5, 0.5, 1.0,
+
+        0.7, 0.3, 0.7, 1.0,
+        0.6, 0.3, 0.3, 1.0,
+        0.5, 0.3, 0.2, 1.0,
+        0.4, 0.3, 0.3, 1.0,
+        0.3, 0.3, 0.5, 1.0,
+        0.2, 0.3, 0.3, 1.0,
+
+        0.1, 0.1, 0.1, 1.0,
+        0.1, 0.1, 0.1, 1.0,
+        0.1, 0.5, 0.1, 1.0,
+        0.1, 0.1, 0.1, 1.0,
+        0.2, 0.1, 0.1, 1.0,
+        0.1, 0.1, 0.1, 1.0,
+
+        0.7, 0.7, 0.7, 1.0,
+        0.7, 0.7, 0.7, 1.0,
+        0.7, 0.7, 0.7, 1.0,
+        0.7, 0.7, 0.7, 1.0,
+        0.7, 0.7, 0.7, 1.0,
+        0.7, 0.7, 0.7, 1.0,
+
+        0.2, 0.2, 0.8, 1.0,
+        0.2, 0.2, 0.8, 1.0,
+        0.2, 0.2, 0.8, 1.0,
+        0.2, 0.2, 0.8, 1.0,
+        0.2, 0.2, 0.8, 1.0,
+        0.2, 0.2, 0.8, 1.0,
+
+        0.2, 0.8, 0.2, 1.0,
+        0.2, 0.8, 0.2, 1.0,
+        0.2, 0.8, 0.2, 1.0,
+        0.2, 0.8, 0.2, 1.0,
+        0.2, 0.8, 0.2, 1.0,
+        0.2, 0.8, 0.2, 1.0,
+    };
+
     for (int i = 0; i < 108; i++) {
         vertices[i] = tempVertices[i];
     }
 
-    glGenVertexArrays(1, &(this->VAO)); // make sure that the constructor for Cube runs AFTER glfw and GLAD are initialized or you WILL get an access violation
-    glGenBuffers(1, &(this->VBO));
+    for (int i = 0; i < 144; i++) {
+        colors[i] = tempColors[i];
+    }
 
+    glGenVertexArrays(1, &(this->VAO)); // make sure that the constructor for Cube runs AFTER glfw and GLAD are initialized or you WILL get an access violation
+    glGenBuffers(1, &(this->positionBuffer));
+    glGenBuffers(1, &(this->colorBuffer));
 
     glBindVertexArray(VAO); // make VAO the current Vertex Array Object by binding it (always bind the vao before anything else and unbind it after everything else (everything besides EBO, EBO always last))
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); // bind the VBO specifying that its a GL_ARRAY_BUFFER
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // add the vertices to the VBO
+    // position stuff
+    glBindBuffer(GL_ARRAY_BUFFER, positionBuffer); // bind the VBO specifying that its a GL_ARRAY_BUFFER
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 108, vertices, GL_STATIC_DRAW); // add the vertices to the VBO
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0); // tell opengl how to read the vertices from the buffer
-    glEnableVertexAttribArray(0); // enable the attribute so that opengl knows to use it (0 for location = 0)
+    glVertexAttribPointer(positionAttributeLocation, 3, GL_FLOAT, GL_FALSE, 0, (void*)0); // tell opengl how to read the vertices from the buffer
+    glEnableVertexAttribArray(positionAttributeLocation); // enable the attribute so that opengl knows to use it (0 for location = 0)
+
+    // color stuff
+    glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 144, colors, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(colorAttributeLocation, 4, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glEnableVertexAttribArray(colorAttributeLocation);
 
     // unbind everything
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -77,6 +134,6 @@ Cube::Cube() {
 
 void Cube::draw() {
     glBindVertexArray(VAO); // bind the vao so that opengl knows to use it for drawing
-    glDrawArrays(GL_TRIANGLES, 0, 108);
+    glDrawArrays(GL_TRIANGLES, 0, 36); // 108/3
     glBindVertexArray(0); // unbind
 }

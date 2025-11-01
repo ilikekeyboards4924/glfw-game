@@ -14,6 +14,9 @@ extern void initShaders();
 
 extern GLuint shaderProgram;
 
+extern GLuint positionAttributeLocation;
+extern GLuint colorAttributeLocation;
+
 extern GLuint modelMatrixLocation;
 extern GLuint viewMatrixLocation;
 extern GLuint projectionMatrixLocation;
