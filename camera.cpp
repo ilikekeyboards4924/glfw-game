@@ -16,7 +16,7 @@ Camera::Camera() {
 	right = glm::vec3(0, 0, 0);
 	up = glm::vec3(0, 1, 0);
 
-	movementSpeed = 0.1;
+	movementSpeed = 0.02;
 }
 
 void Camera::normalizeCameraVectors() {

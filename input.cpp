@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <iostream>
 #include "input.h"
 #include "camera.h"
@@ -9,23 +10,26 @@ double movementY = 0;
 
 void keyHandler(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-        std::cout << "E pressed" << std::endl;
+        camera.position = camera.position + camera.up * camera.movementSpeed * deltaTime;
     }
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        camera.position = camera.position + -camera.up * camera.movementSpeed * deltaTime;
+    }
+
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        std::cout << "W pressed" << std::endl;
+        camera.position = camera.position + camera.frontXZ * camera.movementSpeed * deltaTime;
     }
-
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        std::cout << "S pressed" << std::endl;
+        camera.position = camera.position + -camera.frontXZ * camera.movementSpeed * deltaTime;
     }
 
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        std::cout << "A pressed" << std::endl;
-    }
 
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        std::cout << "D pressed" << std::endl;
+        camera.position = camera.position + camera.right * camera.movementSpeed * deltaTime;
+    }
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        camera.position = camera.position + -camera.right * camera.movementSpeed * deltaTime;
     }
 }
 

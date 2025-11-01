@@ -8,4 +8,6 @@ extern double mousePosX, mousePosY;
 extern Camera camera;
 extern Cube* cube;
 
+extern float deltaTime; // specify float because glm is strange about it being a double
+
 #endif

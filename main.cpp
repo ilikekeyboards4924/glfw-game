@@ -1,18 +1,15 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <string>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include <glad/glad.h> // for initializing OpenGL functions
+#include <GLFW/glfw3.h> // make window
+#include <iostream> // cout & endl
+#include <string> // string
+#include <glm/glm.hpp> // matrix stuff
+#include <glm/gtc/matrix_transform.hpp> // matrix stuff
+#include <chrono> // deltaTime
 #include "input.h"
 #include "global.h"
 
 
-// fix whatever is wrong with the mouse input
 // fix the stuff wrong with global and the cube in global
-// add movement
-
-
 
 
 
@@ -41,6 +38,8 @@ const string fragmentShaderSourceString = R"(#version 330 core
 const GLchar* vertexShaderSource = vertexShaderSourceString.c_str();
 const GLchar* fragmentShaderSource = fragmentShaderSourceString.c_str();
 
+long long lastTime = 0;
+long long currentTime = 0;
 
 int main() {
     glfwInit(); // initialize glfw
@@ -48,6 +47,8 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // tell glfw we are using the core profile of opengl, so only the modern "core" functions
+
+
 
 
 
@@ -158,7 +159,19 @@ int main() {
     );
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0), (double)(windowWidth) / (double)(windowHeight), 0.1, 1000.0);
 
+
+    double fpsMilliseconds = 1000 / 60;
     while (!glfwWindowShouldClose(window)) {
+        // deltaTime stuff
+        auto now = std::chrono::system_clock::now();
+        auto duration = now.time_since_epoch();
+        auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
+        long long currentTime = milliseconds.count();
+        deltaTime = currentTime - lastTime;
+
+
+
+        // drawing and updating
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT); // clear the back buffer and assign the new color to it
 
@@ -169,10 +182,9 @@ int main() {
         glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &viewMatrix[0][0]);
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(1.0f), glm::vec3(2.0f, 5.0f, .0f));
+        modelMatrix = glm::rotate(modelMatrix, glm::radians(0.1f * deltaTime), glm::vec3(2.0f, 5.0f, .0f));
 
         cube->draw();
-        
 
         keyHandler(window);
 
@@ -184,9 +196,11 @@ int main() {
             camera.up
         );
 
-        
+
         glfwSwapBuffers(window); // swap the back and front buffers
         glfwPollEvents(); // take care of all the glfw events
+
+        lastTime = currentTime;
     }
 
 

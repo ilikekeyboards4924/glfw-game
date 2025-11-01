@@ -6,3 +6,5 @@ Cube* cube;
 
 double mousePosX;
 double mousePosY;
+
+float deltaTime = 0;

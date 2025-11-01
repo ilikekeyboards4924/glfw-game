@@ -15,7 +15,7 @@ public:
 	glm::vec3 right;
 	glm::vec3 up;
 
-	double movementSpeed;
+	float movementSpeed; // specify float because glm is strange about it being a double
 	Camera();
 
 	void normalizeCameraVectors();
