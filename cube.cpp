@@ -4,6 +4,8 @@
 #include "cube.h"
 
 Cube::Cube() {
+    modelMatrix = glm::mat4(1.0f);
+
     GLfloat tempVertices[108] = { // use this to define vertices
         // Front face (z = 0.5)
         -0.5, -0.5, 0.5,  // bottom-left

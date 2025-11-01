@@ -7,9 +7,9 @@
 #include <chrono> // deltaTime
 #include "input.h"
 #include "global.h"
+#include "chunk.h"
 
 
-// fix the stuff wrong with global and the cube in global
 
 long long lastTime = 0;
 long long currentTime = 0;
@@ -17,9 +17,8 @@ long long currentTime = 0;
 void checkGLErrors() { // delete later
     GLenum err;
     while ((err = glGetError()) != GL_NO_ERROR) {
-        // Log the error (e.g., print to console)
+        // log error
         std::cerr << "OpenGL Error: " << err << std::endl;
-        // You might want to break here to find the exact line
     }
 }
 
@@ -55,11 +54,12 @@ int main() {
     glViewport(0, 0, windowWidth, windowHeight); // specify the viewport of OpenGL in the window
     initShaders(); // make sure to run this BEFORE any classes that have constructors that contain shader/drawing stuff
 
-    cube = new Cube();
+
+    Chunk chunk = Chunk();
 
     camera = Camera();
 
-    glm::mat4 modelMatrix = glm::mat4(1.0f);
+    //glm::mat4 modelMatrix = glm::mat4(1.0f);
     glm::mat4 viewMatrix = glm::lookAt(
         glm::vec3(0.0f, 0.0f, 3.0f), // camera position
         glm::vec3(0.0f, 0.0f, 0.0f), // look at
@@ -86,16 +86,13 @@ int main() {
         glUseProgram(shaderProgram);
 
         keyHandler(window);
-
         camera.updateCamera();
         viewMatrix = glm::lookAt(camera.position, camera.position + camera.front, camera.up);
-        modelMatrix = glm::rotate(modelMatrix, glm::radians(0.1f * deltaTime), glm::vec3(2.0f, 5.0f, .0f));
 
-        glUniformMatrix4fv(modelMatrixLocation, 1, GL_FALSE, &modelMatrix[0][0]);
         glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &viewMatrix[0][0]);
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-        cube->draw();
+        chunk.draw();
         checkGLErrors();
 
         glfwSwapBuffers(window); // swap the back and front buffers
@@ -105,8 +102,6 @@ int main() {
     }
 
 
-    //glDeleteVertexArrays(1, &VAO);
-    //glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
 
 
