@@ -145,6 +145,9 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="input.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="drawing.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

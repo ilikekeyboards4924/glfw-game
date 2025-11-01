@@ -38,6 +38,6 @@ void Camera::calculateCameraVectors() {
 }
 
 void Camera::updateCamera() {
-	pitch = std::max(-90 + 0.001, std::min(pitch, 90 - 0.001));
+	pitch = std::max(-90 + 0.1, std::min(pitch, 90 - 0.1));
 	calculateCameraVectors();
 }
