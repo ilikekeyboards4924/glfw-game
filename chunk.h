@@ -9,10 +9,24 @@
 
 class Chunk {
 public:
-	//Cube* tiles[100];
+	glm::mat4 modelMatrix;
+
+	GLuint VAO, positionBuffer, colorBuffer;
+	int meshLength; // theres probably a better way than this
+	
+	glm::vec3 position;
+	
 	std::array<std::unique_ptr<Cube>, 1000> tiles;
 
 	Chunk();
+
+	Chunk(glm::vec3 positionVector);
+
+	void init(glm::vec3 positionVector);
+
+	Cube* getTile(int x, int y, int z);
+
+	void buildMesh();
 
 	void draw();
 };

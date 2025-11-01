@@ -54,8 +54,47 @@ int main() {
     glViewport(0, 0, windowWidth, windowHeight); // specify the viewport of OpenGL in the window
     initShaders(); // make sure to run this BEFORE any classes that have constructors that contain shader/drawing stuff
 
+    //Chunk* chunks = new Chunk[1000]; // put it on the heap or you will get a Stack Overflow
 
-    Chunk chunk = Chunk();
+    //for (int y = 0; y < 10; y++) {
+    //    for (int z = 0; z < 10; z++) {
+    //        for (int x = 0; x < 10; x++) {
+    //            chunks[y * 100 + z * 10 + x * 1].init(glm::vec3(10.0f * x, 10.0f * y, 10.0f * z));
+    //        }
+    //    }
+    //}
+
+    //for (int y = 0; y < 10; y++) {
+    //    for (int z = 0; z < 10; z++) {
+    //        for (int x = 0; x < 10; x++) {
+    //            chunks[y * 100 + z * 10 + x * 1].buildMesh();
+    //        }
+    //    }
+    //}
+
+    //Chunk* chunk = new Chunk(glm::vec3(0.0f, 0.0f, 0.0f));
+    //chunk->buildMesh();
+
+    Chunk* chunks = new Chunk[100];
+    for (int z = 0; z < 10; z++) {
+        for (int x = 0; x < 10; x++) {
+            chunks[z * 10 + x * 1].init(glm::vec3((float)x * 10.0f, (float)x * (float)z, (float)z * 10.0f));
+            chunks[z * 10 + x * 1].buildMesh();
+        }
+    }
+
+    //for (int i = 0; i < 10; i++) {
+    //    chunks[i].init(glm::vec3((float)i * 10.0f, (float)i, (float)i));
+    //    chunks[i].buildMesh();
+    //}
+
+    //Chunk chunk1 = Chunk(glm::vec3(10.0f, 0.0f, 0.0f));
+    //Chunk chunk2 = Chunk(glm::vec3(-10.0f, 0.0f, 0.0f));
+    //Chunk chunk3 = Chunk(glm::vec3(0.0f, -10.0f, 0.0f));
+    //chunk.buildMesh();
+    //chunk1.buildMesh();
+    //chunk2.buildMesh();
+    //chunk3.buildMesh();
 
     camera = Camera();
 
@@ -92,7 +131,25 @@ int main() {
         glUniformMatrix4fv(viewMatrixLocation, 1, GL_FALSE, &viewMatrix[0][0]);
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-        chunk.draw();
+        //for (int y = 0; y < 10; y++) {
+        //    for (int z = 0; z < 10; z++) {
+        //        for (int x = 0; x < 10; x++) {
+        //            chunks[y * 100 + z * 10 + x * 1].draw();
+        //        }
+        //    }
+        //}
+        //chunk->draw();
+        for (int z = 0; z < 10; z++) {
+            for (int x = 0; x < 10; x++) {
+                chunks[z * 10 + x * 1].draw();
+            }
+        }
+        //for (int i = 0; i < 10; i++) {
+        //    chunks[i].draw();
+        //}
+        //chunk1.draw();
+        //chunk2.draw();
+        //chunk3.draw();
         checkGLErrors();
 
         glfwSwapBuffers(window); // swap the back and front buffers
@@ -104,6 +161,7 @@ int main() {
 
     glDeleteProgram(shaderProgram);
 
+    //delete[] chunks;
 
     glfwDestroyWindow(window);
     glfwTerminate();
