@@ -4,6 +4,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory> // std::unique_ptr
 #include <cmath> // floor
+#include <cstdlib> // rand()
+#include <ctime> // time()
 #include <vector>
 #include "global.h"
 #include "chunk.h"
@@ -30,12 +32,20 @@ void Chunk::init(glm::vec3 positionVector) {
 
 	position = positionVector;
 
+	srand(time(0)); // set random number generator seed to current time
+
 	for (int y = 0; y < 10; y++) {
 		for (int z = 0; z < 10; z++) {
 			for (int x = 0; x < 10; x++) {
 				auto tempCube = std::make_unique<Cube>();
 				tempCube->modelMatrix = glm::translate(tempCube->modelMatrix, glm::vec3((float)x + position.x, (float)y + position.y, (float)z + position.z));
-				tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
+
+				if (rand() % 100 < 50) {
+					tiles[y * 100 + z * 10 + x * 1] = nullptr;
+				}
+				else {
+					tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
+				}
 			}
 		}
 	}

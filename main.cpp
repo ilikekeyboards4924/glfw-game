@@ -53,6 +53,8 @@ int main() {
         return -1;
     }
 
+    //glfwSetWindowPos(window, 0 + (mode->width - windowWidth) / 2, 0 + (mode->height - windowHeight) / 2);
+    glfwSetWindowPos(window, 50, 50);
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // make it so the mouse gets locked to the window
     if (glfwRawMouseMotionSupported()) glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE); // if its supported, use the raw mouse motion
