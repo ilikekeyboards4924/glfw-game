@@ -10,4 +10,12 @@ extern Cube* cube;
 
 extern float deltaTime; // specify float because glm is strange about it being a double
 
+extern void initShaders();
+
+extern GLuint shaderProgram;
+
+extern GLuint modelMatrixLocation;
+extern GLuint viewMatrixLocation;
+extern GLuint projectionMatrixLocation;
+
 #endif

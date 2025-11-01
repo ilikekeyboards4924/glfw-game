@@ -38,12 +38,6 @@ void Camera::calculateCameraVectors() {
 }
 
 void Camera::updateCamera() {
-	//pitch = (int)std::floor(-mousePosY) % 360;
-	//yaw = (int)std::floor(mousePosX) % 360;
-
 	pitch = std::max(-90 + 0.001, std::min(pitch, 90 - 0.001));
 	calculateCameraVectors();
-
-	//std::cout << front[0] << "   " << front[2] << std::endl;
-	//std::cout << pitch << "   " << -mousePosY << std::endl;
 }
