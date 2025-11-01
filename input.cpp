@@ -15,6 +15,12 @@ void keyHandler(GLFWwindow* window) {
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
         camera.position = camera.position + -camera.up * camera.movementSpeed * deltaTime;
     }
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        camera.position = camera.position + camera.up * camera.movementSpeed * deltaTime;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+        camera.position = camera.position + -camera.up * camera.movementSpeed * deltaTime;
+    }
 
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
