@@ -73,14 +73,15 @@ int main() {
 
 
 
-    Chunk* chunks = new Chunk[25];
-    for (int z = 0; z < 5; z++) {
-        for (int x = 0; x < 5; x++) {
-            chunks[z * 5 + x * 1].init(glm::vec3((float)x * 10.0f, (float)x * (float)z * 0.0f, (float)z * 10.0f));
-            chunks[z * 5 + x * 1].buildMesh();
-        }
-    }
-    //World world = World();
+    //Chunk* chunks = new Chunk[100];
+    //for (int z = 0; z < 10; z++) {
+    //    for (int x = 0; x < 10; x++) {
+    //        chunks[z * 10 + x * 1].init(glm::vec3((float)x * 10.0f, (float)x * (float)z * 0.0f, (float)z * 10.0f));
+    //        chunks[z * 10 + x * 1].buildMesh();
+    //    }
+    //}
+    World world = World();
+    world.init();
     //world.buildWorldMesh();
 
 
@@ -122,12 +123,12 @@ int main() {
         glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 
-        //world.draw();
-        for (int z = 0; z < 5; z++) {
-            for (int x = 0; x < 5; x++) {
-                chunks[z * 5 + x * 1].draw();
-            }
-        }
+        world.draw();
+        //for (int z = 0; z < 10; z++) {
+        //    for (int x = 0; x < 10; x++) {
+        //        chunks[z * 10 + x * 1].draw();
+        //    }
+        //}
 
 
         checkGLErrors();
