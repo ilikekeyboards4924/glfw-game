@@ -37,11 +37,11 @@ void Chunk::init(glm::vec3 positionVector) {
 	position = positionVector;
 
 	// different seed for each time the constructor runs / Chunk is initialized
-	//auto now = std::chrono::system_clock::now();
-	//auto duration_since_epoch = now.time_since_epoch();
-	//auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration_since_epoch);
-	//long long currentMilliseconds = milliseconds.count();
-	//srand(currentMilliseconds); // set random number generator seed to current time
+	auto now = std::chrono::system_clock::now();
+	auto duration_since_epoch = now.time_since_epoch();
+	auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration_since_epoch);
+	long long currentMilliseconds = milliseconds.count();
+	srand(currentMilliseconds); // set random number generator seed to current time
 
 
 	for (int y = 0; y < 10; y++) {
@@ -50,6 +50,12 @@ void Chunk::init(glm::vec3 positionVector) {
 				auto tempCube = std::make_unique<Cube>();
 				tempCube->modelMatrix = glm::translate(tempCube->modelMatrix, glm::vec3((float)x + position.x, (float)y + position.y, (float)z + position.z));
 
+				if (y > rand() % 2 + 5) {
+					tiles[y * 100 + z * 10 + x * 1] = nullptr;
+				} else {
+					tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
+				}
+
 				//if (rand() % 100 < 25) { // x% chance of removing block
 				//	tiles[y * 100 + z * 10 + x * 1] = nullptr;
 				//}
@@ -57,7 +63,7 @@ void Chunk::init(glm::vec3 positionVector) {
 				//	tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
 				//}
 
-				tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
+				//tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
 			}
 		}
 	}

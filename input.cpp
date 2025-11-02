@@ -54,5 +54,5 @@ void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
     camera.yaw += movementX * sensitivityX;
     camera.pitch -= movementY * sensitivityY; // gotta do subtraction instead of addition because an increase in Y in screen space goes in the opposite direction of an increase in Y in clip space
 
-    std::cout << movementX << "   " << movementY << "   " << camera.yaw << "   " << camera.pitch << std::endl;
+    //std::cout << movementX << "   " << movementY << "   " << camera.yaw << "   " << camera.pitch << std::endl;
 }

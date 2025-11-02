@@ -73,21 +73,13 @@ int main() {
 
 
 
-    //Chunk* chunks = new Chunk[100];
-    //for (int z = 0; z < 10; z++) {
-    //    for (int x = 0; x < 10; x++) {
-    //        chunks[z * 10 + x * 1].init(glm::vec3((float)x * 10.0f, (float)x * (float)z * 0.0f, (float)z * 10.0f));
-    //        chunks[z * 10 + x * 1].buildMesh();
-    //    }
-    //}
-    World world = World();
+    World world = World(); // init all the chunks n stuff
     world.init();
-    //world.buildWorldMesh();
 
 
     camera = Camera();
 
-    //glm::mat4 modelMatrix = glm::mat4(1.0f);
+
     glm::mat4 viewMatrix = glm::lookAt(
         glm::vec3(0.0f, 0.0f, 3.0f), // camera position
         glm::vec3(0.0f, 0.0f, 0.0f), // look at
@@ -124,11 +116,6 @@ int main() {
 
 
         world.draw();
-        //for (int z = 0; z < 10; z++) {
-        //    for (int x = 0; x < 10; x++) {
-        //        chunks[z * 10 + x * 1].draw();
-        //    }
-        //}
 
 
         checkGLErrors();
@@ -142,7 +129,6 @@ int main() {
 
     glDeleteProgram(shaderProgram);
 
-    //delete[] chunks;
 
     glfwDestroyWindow(window);
     glfwTerminate();
