@@ -50,7 +50,7 @@ void Chunk::init(glm::vec3 positionVector) {
 				auto tempCube = std::make_unique<Cube>();
 				tempCube->modelMatrix = glm::translate(tempCube->modelMatrix, glm::vec3((float)x + position.x, (float)y + position.y, (float)z + position.z));
 
-				if (y > rand() % 2 + 5) {
+				if (y > x % 10) {
 					tiles[y * 100 + z * 10 + x * 1] = nullptr;
 				} else {
 					tiles[y * 100 + z * 10 + x * 1] = std::move(tempCube);
