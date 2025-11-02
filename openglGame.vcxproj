@@ -137,6 +137,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="libraries\src\glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="cube.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="world.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="drawing.png" />

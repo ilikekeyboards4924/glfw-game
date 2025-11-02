@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <array>
 #include <memory>
+#include <vector>
 #include "cube.h"
 
 class Chunk {
@@ -17,6 +18,9 @@ public:
 	glm::vec3 position;
 	
 	std::array<std::unique_ptr<Cube>, 1000> tiles;
+
+	std::vector<GLfloat> vertices;
+	std::vector<GLfloat> colors;
 
 	Chunk();
 

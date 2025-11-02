@@ -21,14 +21,15 @@ const string vertexShaderSourceString = R"(#version 330 core
     in vec3 position;
     in vec4 color;
 
-    uniform mat4 modelMatrix;
+    //uniform mat4 modelMatrix;
     uniform mat4 viewMatrix;
     uniform mat4 projectionMatrix;
 
     out vec4 colorData;
     
     void main() {
-        gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+        //gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);
         colorData = color;
     }
 )";
